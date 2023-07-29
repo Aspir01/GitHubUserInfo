@@ -5,13 +5,17 @@ import axios from 'axios';
 
 export default function List({ users, isLoading, errorMessage }) {
     const [reposCount, setReposCount] = useState({});
+    const [followersCount, setFollowersCount] = useState({});
+    const [followingCount, setFollowingCount] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
     const [sortedUsers, setSortedUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
     const accountsPerPage = 8;
     const isLoadingRepos = Object.keys(reposCount).length !== users.length;
+    const isLoadingFollowing = Object.keys(followingCount).length !== users.length;
 
     useEffect(() => {
+        // Функция поиска количества репозиториев
         const fetchReposCount = async () => {
             try {
                 const promises = users.map((user) =>
@@ -29,9 +33,48 @@ export default function List({ users, isLoading, errorMessage }) {
                 console.error('Error fetching repositories count:', error);
             }
         };
+        // Функция поиска количества подпиcчиков
+        const fetchFollowersCount = async () => {
+            try {
+                const promises = users.map((user) =>
+                    axios.get(`https://api.github.com/users/${user.login}`)
+                );
+
+                const responses = await Promise.all(promises);
+                const data = responses.reduce((result, response) => {
+                    result[response.data.login] = response.data.followers;
+                    return result;
+                }, {});
+
+                setFollowersCount(data);
+            } catch (error) {
+                console.error('Error fetching followers count:', error);
+            }
+        };
+
+        // Функция поиска количества подписок
+        const fetchFollowingCount = async () => {
+            try {
+                const promises = users.map((user) =>
+                    axios.get(`https://api.github.com/users/${user.login}/following`)
+                );
+
+                const responses = await Promise.all(promises);
+                const data = responses.reduce((result, response, index) => {
+                    result[users[index].login] = response.data.length;
+                    return result;
+                }, {});
+
+                setFollowingCount(data);
+            } catch (error) {
+                console.error('Error fetching following count:', error);
+            }
+        };
 
         if (users.length > 0) {
             fetchReposCount();
+            fetchFollowersCount();
+            fetchFollowingCount();
         }
     }, [users]);
 
@@ -77,6 +120,7 @@ export default function List({ users, isLoading, errorMessage }) {
                     <>
                         {currentAccounts.map((user) => {
                             const repos = isLoadingRepos ? 'Загрузка...' : reposCount[user.login] || 0;
+
                             return (
                                 <div key={user.id} className="card" onClick={() => handleCardClick(user)} data-testid="card">
                                     <img alt="head_portrait" src={user.avatar_url} />
@@ -96,7 +140,7 @@ export default function List({ users, isLoading, errorMessage }) {
                 ))}
             </div>
             {selectedUser && (
-                <Modal user={selectedUser} onClose={closeModal} />
+                <Modal user={selectedUser} isLoadingRepos={isLoadingRepos} followingCount={followingCount} isLoadingFollowing={isLoadingFollowing} followersCount={followersCount} reposCount={reposCount} onClose={closeModal} />
             )}
         </>
     );
