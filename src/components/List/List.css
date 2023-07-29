@@ -30,6 +30,10 @@
 
 .pagination {
   display: flex;
+  position: sticky;
+  margin: 1.5% 0;
+  margin-left: auto;
+  right: 50%;
   justify-content: center;
 }
 

@@ -10,9 +10,16 @@ export default function Modal({ user, followersCount, isLoadingRepos, followingC
             <div className="modal">
                 <img alt="head_portrait" src={user.avatar_url} />
                 <h2>{user.login}</h2>
-                <p>Количество репозиториев: {repos}</p>
-                <p>Количество подписчиков: {followers}</p>
-                <p>Количество подписок: {following}</p>
+                <div className='info-text'>
+                    <p>Репозиторий:</p>
+                    <p>Подписчиков:</p>
+                    <p>Подписок:</p>
+                </div>
+                <div className='info-text num'>
+                    <p>{repos}</p>
+                    <p>{followers}</p>
+                    <p>{following}</p>
+                </div>
                 {user.bio && <p>Биография: {user.bio}</p>}
                 <a href={user.html_url} target="_blank" rel="noopener noreferrer">
                     Перейти к аккаунту
