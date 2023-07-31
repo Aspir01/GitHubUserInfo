@@ -17,6 +17,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-shadow: 10px black;
 }
 
 .card img {
@@ -30,10 +31,12 @@
 
 .pagination {
   display: flex;
-  position: sticky;
+  position: fixed;
+  /* Changed from sticky to fixed */
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   margin: 1.5% 0;
-  margin-left: auto;
-  right: 50%;
   justify-content: center;
 }
 
@@ -54,24 +57,4 @@
   color: black;
   background-color: #ffffff;
   border: 2px solid black;
-}
-
-.sort {
-  background-color: #000000;
-  color: #ffffff;
-  width: 260px;
-  height: 55px;
-  font-size: 16px;
-  margin-bottom: 30px;
-  margin-left: 40px;
-  border-radius: 5px;
-  border: 5px solid transparent;
-  transition: 0.3s;
-  cursor: pointer;
-}
-
-.sort:hover {
-  color: #000000;
-  background: white;
-  border: 5px solid black;
 }

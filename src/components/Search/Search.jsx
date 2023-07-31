@@ -1,11 +1,12 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import axios from 'axios'
 import "./Search.css"
 
-export default function Search({ setUsers, setIsLoading, setErrorMessage }) {
+export default function Search({ users, setSortedUsers, setUsers, reposCount, setIsLoading, setErrorMessage }) {
 
     const inputRef = useRef()
     const placeHolder = "Введите логин"
+    const [shouldSort, setShouldSort] = useState(false)
 
     // Функция поиска гитхаб аккаунта
     const search = async () => {
@@ -15,6 +16,7 @@ export default function Search({ setUsers, setIsLoading, setErrorMessage }) {
             response => {
                 setIsLoading(false)
                 setUsers(response.data.items)
+                setShouldSort(false)
             },
             error => {
                 setIsLoading(false)
@@ -22,8 +24,25 @@ export default function Search({ setUsers, setIsLoading, setErrorMessage }) {
             }
         )
     }
+
+    useEffect(() => {
+        sortUsersByRepos();
+    }, [reposCount]);
+
+    // Функция сортировки репозиториев
+    const sortUsersByRepos = () => {
+        const sortedUsers = users.slice().sort((a, b) => {
+            const reposA = reposCount[a.login] || 0;
+            const reposB = reposCount[b.login] || 0;
+            return reposB - reposA;
+        });
+        setSortedUsers(sortedUsers);
+    };
+
+
     return (
         <div className='search-box'>
+            <button className='sort' onClick={() => setShouldSort(true)}>Отсортировать по репозиториям</button>
             <input type="text" ref={inputRef} placeholder={placeHolder} />
             <button onClick={search}>Поиск</button>
         </div>

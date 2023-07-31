@@ -3,12 +3,10 @@ import Modal from '../Modal/Modal';
 import './List.css';
 import axios from 'axios';
 
-export default function List({ users, isLoading, errorMessage }) {
-    const [reposCount, setReposCount] = useState({});
+export default function List({ users, sortedUsers, reposCount, setReposCount, isLoading, errorMessage }) {
     const [followersCount, setFollowersCount] = useState({});
     const [followingCount, setFollowingCount] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
-    const [sortedUsers, setSortedUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
     const accountsPerPage = 8;
     const isLoadingRepos = Object.keys(reposCount).length !== users.length;
@@ -78,20 +76,6 @@ export default function List({ users, isLoading, errorMessage }) {
         }
     }, [users]);
 
-    useEffect(() => {
-        sortUsersByRepos();
-    }, [reposCount]);
-
-    // Функция сортировки репозиториев
-    const sortUsersByRepos = () => {
-        const sortedUsers = users.slice().sort((a, b) => {
-            const reposA = reposCount[a.login] || 0;
-            const reposB = reposCount[b.login] || 0;
-            return reposB - reposA;
-        });
-        setSortedUsers(sortedUsers);
-    };
-
     // Функция выбора карточки пользователя
     const handleCardClick = (user) => {
         setSelectedUser(user);
@@ -110,10 +94,9 @@ export default function List({ users, isLoading, errorMessage }) {
 
     return (
         <>
-            <button className='sort' onClick={sortUsersByRepos}>Отсортировать по репозиториям</button>
             <div className="container">
                 {isLoading ? (
-                    <h2>Загрузка......</h2>
+                    <center><h2>Загрузка......</h2></center>
                 ) : errorMessage !== '' ? (
                     <h2>Ошибка соединения</h2>
                 ) : (
