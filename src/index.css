@@ -3,7 +3,45 @@
   padding: 0;
 }
 
-
 img {
   border-radius: 5px;
+}
+
+@media (width < 900px) {
+  .search-container p {
+    font-size: 20px;
+  }
+
+  .search-box {
+    margin: 10px;
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+
+  .search-box input {
+    margin: 0 !important;
+    width: 88% !important;
+  }
+
+  .search-box button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 0;
+    width: 35% !important;
+    font-size: 14px !important;
+  }
+
+  .card {
+    margin: 10px !important;
+    width: 85% !important;
+  }
+
+  .container {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .modal {
+    width: 100% !important;
+  }
 }
