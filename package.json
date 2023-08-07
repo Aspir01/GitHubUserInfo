@@ -1,12 +1,11 @@
 {
+  "homepage": "https://aspir01.github.io/GitHubUserInfo",
   "name": "table",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://aspir01.github.io/GitHubUserInfo/",
   "dependencies": {
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.4.0",
-    "gh-pages": "^5.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-paginate": "^8.2.0",
@@ -43,6 +42,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^14.0.0",
+    "gh-pages": "^5.0.0",
     "jest": "^27.5.1"
   }
 }

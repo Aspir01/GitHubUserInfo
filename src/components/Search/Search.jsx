@@ -42,7 +42,6 @@ export default function Search({ users, setSortedUsers, setUsers, reposCount, se
 
     return (
         <div className='search-box'>
-            <button className='sort' onClick={() => setShouldSort(true)}>Отсортировать по репозиториям</button>
             <input type="text" ref={inputRef} placeholder={placeHolder} />
             <button onClick={search}>Поиск</button>
         </div>

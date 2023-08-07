@@ -7,7 +7,7 @@
 
 .search-box input {
     padding: 0 20px;
-    width: 30%;
+    width: 35.5%;
     height: 50px;
     border-radius: 10px;
     border: 5px solid #000;
@@ -16,7 +16,7 @@
 }
 
 .search-box button {
-    width: 180px;
+    width: 160px;
     height: 60px;
     border-radius: 10px;
     background-color: #000;
@@ -43,21 +43,4 @@
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.sort {
-    color: #ffffff;
-    width: 260px;
-    height: 55px;
-    font-size: 14px !important;
-    border-radius: 5px;
-    border: 5px solid transparent;
-    transition: 0.3s;
-    cursor: pointer;
-}
-
-.sort:hover {
-    color: #000000;
-    background: white;
-    border: 5px solid black;
 }
